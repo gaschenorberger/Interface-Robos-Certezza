@@ -1,4 +1,4 @@
-('C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+('C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
  '- Robos\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\gabriel.alvise\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\PIL\\__init__.py',

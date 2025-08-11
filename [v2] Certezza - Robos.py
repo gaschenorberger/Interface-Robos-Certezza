@@ -17,6 +17,7 @@ import threading
 from ttkbootstrap import Style
 from ttkbootstrap.widgets import Notebook
 from tkinter import messagebox
+import requests
 
 # BIBLIOTECAS ROBÔS
 
@@ -61,6 +62,27 @@ caminho_arquivo = ""
 usuario = getpass.getuser()
 pasta_arquivos = fr"C:\Users\{usuario}\Desktop\DOWNLOAD'S ROBOS"
 os.makedirs(pasta_arquivos, exist_ok=True)
+
+
+""" 
+==============================================================================
+                                    VERSÃO
+==============================================================================
+"""
+
+
+# Versão atual do seu programa
+VERSAO_ATUAL = "1.0.1"
+
+# URL do arquivo de versão no GitHub (RAW)
+URL_VERSAO = "https://raw.githubusercontent.com/gaschenorberger/Interface-Robos-Certezza/main/versao.txt"
+
+# URL do instalador mais recente (GitHub Releases)
+URL_INSTALADOR = "https://github.com/gaschenorberger/Interface-Robos-Certezza/releases/latest/download/Setup_Certezza_Robos.exe"
+
+
+
+
 
 
 
@@ -1091,7 +1113,8 @@ def parar_robo(lista_chaves_com_erro):
 
 def abrir_ajuda():
     try:
-        caminho_pdf = fr"{caminhoPasta}\documentacao\v1.0.1\Documentacao_Interface_Robos_Certezza_v1.0.1.pdf"
+        # caminho_pdf = fr"{caminhoPasta}\documentacao\v1.0.1\Documentacao_Interface_Robos_Certezza_v1.0.1.pdf" # DESENVOLVIMENTO LOCAL
+        caminho_pdf = fr"{caminhoPasta}\Documentacao_Interface_Robos_Certezza_v1.0.1.pdf" # PARA EXE
 
         if platform.system() == "Windows":
             os.startfile(caminho_pdf)
@@ -1224,6 +1247,38 @@ def add_aba_tooltip(notebook, tab_index, tooltip_text):
     notebook.bind("<Motion>", on_motion)
     notebook.bind("<Leave>", on_leave)
 
+def verificar_atualizacao():
+
+    def baixar_instalador():
+        try:
+            nome_arquivo = "update_instalador.exe"
+            r = requests.get(URL_INSTALADOR, stream=True)
+            
+            with open(nome_arquivo, "wb") as f:
+                for chunk in r.iter_content(1024):
+                    f.write(chunk)
+            
+            messagebox.showinfo("Download concluído", "O instalador será aberto agora para atualizar o programa.")
+            subprocess.Popen([nome_arquivo])
+            os._exit(0)  # Fecha o programa atual
+        except Exception as e:
+            messagebox.showerror("Erro", f"Falha ao baixar o instalador.\n{e}")
+
+
+    try:
+        ultima_versao = requests.get(URL_VERSAO).text.strip()
+        
+        if ultima_versao != VERSAO_ATUAL:
+            resp = messagebox.askyesno("Atualização disponível",
+                                       f"Nova versão {ultima_versao} encontrada.\nDeseja atualizar agora?")
+            if resp:
+                baixar_instalador()
+        else:
+            messagebox.showinfo("Atualizações", "Você já está na última versão.")
+    except Exception as e:
+        messagebox.showerror("Erro", f"Não foi possível verificar atualização.\n{e}")
+
+
 
 """ 
 ==============================================================================
@@ -1321,7 +1376,18 @@ def interfaceXml(master):
 
     botao_ajuda = ctk.CTkButton(header_frame, text="AJUDA", command=abrir_ajuda,
                                 fg_color="#007B8A", hover_color="#006472", text_color="white", width=100)
-    botao_ajuda.grid(row=0, column=2, sticky="e", padx=(10, 10), pady=(5, 0))
+    botao_ajuda.grid(row=0, column=2, sticky="e", padx=(10, 0), pady=(5, 0))
+
+    botao_atualizacao = ctk.CTkButton(
+        header_frame,
+        text="VERIFICAR ATUALIZAÇÃO",
+        command=verificar_atualizacao,
+        fg_color="#007B8A",
+        hover_color="#006472",
+        text_color="white",
+        width=180
+    )
+    botao_atualizacao.grid(row=0, column=1, sticky="e", padx=(230, 0), pady=(5,0))
 
 
     # Radiobuttons
@@ -1352,7 +1418,7 @@ def interfaceXml(master):
     botoes_linha_frame.grid(row=3, column=0, columnspan=2, padx=(10), pady=(5, 10), sticky="w")
 
     botao_upload = ctk.CTkButton(botoes_linha_frame, text="1- UPLOAD", command=upload_arquivo, fg_color="#FFCC00", hover_color="#E6B800", text_color="black", width=100)
-    botao_upload.grid(row=0, column=0, padx=(10, 10))
+    botao_upload.grid(row=0, column=0, padx=(40, 10))
 
     botao_vpn = ctk.CTkButton(botoes_linha_frame, text="2- ABRIR VPN", command=abrir_vpn_thread, fg_color="#FFCC00", hover_color="#E6B800", text_color="black", width=100)
     botao_vpn.grid(row=0, column=1, padx=(0, 10))
@@ -2346,7 +2412,7 @@ def telaPrincipal():
 
     root = ctk.CTk()
     root.title("Painel de Robôs - Certezza")
-    root.geometry("650x600")
+    root.geometry("700x600")
     root.configure(fg_color="#EDEDED") 
     root.iconbitmap(resource_path(fr"{caminhoPasta}\img\logoICO.ico"))
     root.resizable(False, False)

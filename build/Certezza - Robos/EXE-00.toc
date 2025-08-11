@@ -1,9 +1,9 @@
-('C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+('C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
  '- Robos\\Certezza - Robos.exe',
  False,
  False,
  True,
- ['C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\img\\logoICO.ico'],
+ ['C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\img\\logoICO.ico'],
  None,
  False,
  False,
@@ -30,31 +30,31 @@
  None,
  None,
  None,
- 'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+ 'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
  '- Robos\\Certezza - Robos.pkg',
  [('pyi-contents-directory _internal', '', 'OPTION'),
   ('PYZ-00.pyz',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
    '- Robos\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
    '- Robos\\localpycs\\struct.pyc',
    'PYMODULE'),
   ('pyimod01_archive',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
    '- Robos\\localpycs\\pyimod01_archive.pyc',
    'PYMODULE'),
   ('pyimod02_importers',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
    '- Robos\\localpycs\\pyimod02_importers.pyc',
    'PYMODULE'),
   ('pyimod03_ctypes',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
    '- Robos\\localpycs\\pyimod03_ctypes.pyc',
    'PYMODULE'),
   ('pyimod04_pywin32',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\build\\Certezza '
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\build\\Certezza '
    '- Robos\\localpycs\\pyimod04_pywin32.pyc',
    'PYMODULE'),
   ('pyiboot01_bootstrap',
@@ -88,13 +88,13 @@
    'C:\\Users\\gabriel.alvise\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth__tkinter.py',
    'PYSOURCE'),
   ('[v2] Certezza - Robos',
-   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\telaRobos\\[v2] Certezza '
-   '- Robos.py',
+   'C:\\Users\\gabriel.alvise\\Desktop\\VSCODE-ROBOS\\Interface-Robos-Certezza\\[v2] '
+   'Certezza - Robos.py',
    'PYSOURCE')],
  [],
  False,
  True,
- 1754932065,
+ 1754935945,
  [('runw.exe',
    'C:\\Users\\gabriel.alvise\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],
