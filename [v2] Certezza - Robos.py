@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from tkinter import *
 import tkinter as tk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from tkinter import filedialog
 import os
@@ -16,7 +16,6 @@ import multiprocessing
 import threading
 from ttkbootstrap import Style
 from ttkbootstrap.widgets import Notebook
-from tkinter import messagebox
 import requests
 
 # BIBLIOTECAS ROBÔS
@@ -1247,32 +1246,80 @@ def add_aba_tooltip(notebook, tab_index, tooltip_text):
     notebook.bind("<Motion>", on_motion)
     notebook.bind("<Leave>", on_leave)
 
-def verificar_atualizacao():
+def verificar_atualizacao(root):  # precisa receber a janela root para criar a modal
 
-    def baixar_instalador():
-        try:
-            nome_arquivo = "update_instalador.exe"
-            r = requests.get(URL_INSTALADOR, stream=True)
-            
-            with open(nome_arquivo, "wb") as f:
-                for chunk in r.iter_content(1024):
-                    f.write(chunk)
-            
-            messagebox.showinfo("Download concluído", "O instalador será aberto agora para atualizar o programa.")
-            subprocess.Popen([nome_arquivo])
-            os._exit(0)  # Fecha o programa atual
-        except Exception as e:
-            messagebox.showerror("Erro", f"Falha ao baixar o instalador.\n{e}")
+    def centralizar_janela(janela, largura=300, altura=100):
+    # pega a largura e altura da tela
+        largura_tela = janela.winfo_screenwidth()
+        altura_tela = janela.winfo_screenheight()
 
+        # calcula a posição x e y
+        x = (largura_tela - largura) // 2
+        y = (altura_tela - altura) // 2
+
+        # define geometria da janela (largura x altura + x + y)
+        janela.geometry(f"{largura}x{altura}+{x}+{y}")
+
+    def baixar_instalador_com_progresso(url, janela_pai):
+        progresso_janela = tk.Toplevel(janela_pai)
+        progresso_janela.title("Baixando atualização")
+        progresso_janela.geometry("300x100")
+        progresso_janela.transient(janela_pai)
+        progresso_janela.grab_set()
+
+        centralizar_janela(progresso_janela, largura=300, altura=100)
+
+        label = tk.Label(progresso_janela, text="Baixando instalador...")
+        label.pack(pady=10)
+
+        progressbar = ttk.Progressbar(progresso_janela, length=250, mode='determinate')
+        progressbar.pack(pady=10)
+
+        def download():
+            try:
+                nome_arquivo = "update_instalador.exe"
+                caminho_completo = os.path.abspath(nome_arquivo)
+                print("Arquivo salvo em:", caminho_completo)
+
+                with requests.get(url, stream=True, verify=False) as r:
+                    total_length = r.headers.get('content-length')
+
+                    if total_length is None:
+                        with open(nome_arquivo, "wb") as f:
+                            f.write(r.content)
+                        progressbar['value'] = 100
+                    else:
+                        total_length = int(total_length)
+                        downloaded = 0
+                        with open(nome_arquivo, "wb") as f:
+                            for chunk in r.iter_content(chunk_size=1024):
+                                if chunk:
+                                    f.write(chunk)
+                                    downloaded += len(chunk)
+                                    progresso = int(100 * downloaded / total_length)
+                                    progressbar['value'] = progresso
+                                    progresso_janela.update_idletasks()
+
+                messagebox.showinfo("Download concluído", "O instalador será aberto agora para atualizar o programa.")
+                subprocess.Popen([nome_arquivo])
+                os._exit(0)
+
+            except Exception as e:
+                messagebox.showerror("Erro", f"Falha ao baixar o instalador.\n{e}")
+
+            finally:
+                progresso_janela.destroy()
+
+        threading.Thread(target=download, daemon=True).start()
 
     try:
-        ultima_versao = requests.get(URL_VERSAO).text.strip()
-        
+        ultima_versao = requests.get(URL_VERSAO, verify=False).text.strip()
+
         if ultima_versao != VERSAO_ATUAL:
             resp = messagebox.askyesno("Atualização disponível",
                                        f"Nova versão {ultima_versao} encontrada.\nDeseja atualizar agora?")
             if resp:
-                baixar_instalador()
+                baixar_instalador_com_progresso(URL_INSTALADOR, root)
         else:
             messagebox.showinfo("Atualizações", "Você já está na última versão.")
     except Exception as e:
@@ -1381,7 +1428,7 @@ def interfaceXml(master):
     botao_atualizacao = ctk.CTkButton(
         header_frame,
         text="VERIFICAR ATUALIZAÇÃO",
-        command=verificar_atualizacao,
+        command=lambda: verificar_atualizacao(root),
         fg_color="#007B8A",
         hover_color="#006472",
         text_color="white",
@@ -2411,7 +2458,7 @@ def telaPrincipal():
     ctk.set_default_color_theme("blue")
 
     root = ctk.CTk()
-    root.title("Painel de Robôs - Certezza")
+    root.title(f"Painel de Robôs - Certezza - v{VERSAO_ATUAL}")
     root.geometry("700x600")
     root.configure(fg_color="#EDEDED") 
     root.iconbitmap(resource_path(fr"{caminhoPasta}\img\logoICO.ico"))
