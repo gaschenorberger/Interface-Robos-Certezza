@@ -1,5 +1,0 @@
-https://learn.microsoft.com/pt-br/sysinternals/downloads/handle
-
-C:\Users\gabriel.alvise\Downloads\Handle\handle64.exe "Certezza - Robos"
-
-taskkill /f /pid
